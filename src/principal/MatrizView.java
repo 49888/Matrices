@@ -8,11 +8,13 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.JTextComponent;
 
 
 
@@ -64,7 +66,7 @@ public class MatrizView  {
     }
             
  //----------------------------- INGRESAR MATRIZ
-    public static JComponent inputMatriz(int filas, int columnas){
+    public static JComponent inputMatriz(int filas, int columnas, JTextComponent Inputs[][]){
         
      //Layout   
         GridLayout layout = new GridLayout(filas, columnas);
@@ -80,7 +82,11 @@ public class MatrizView  {
                 
                 String name = Integer.toString(i+1) + Integer.toString(j+1);
                 
-                panel.add( inputItem(name) );
+                JTextComponent input = inputItem(name);
+                
+                Inputs[i][j] = input;
+                
+                panel.add( input );
             }
         }
         
@@ -100,6 +106,79 @@ public class MatrizView  {
         input.setPreferredSize(new Dimension(70, 50));
         
         return input;
+    }
+    
+    
+    public static double[][] obtenerMatriz(JTextComponent matriz[][]){
+
+        double[][] AUX = new double[matriz.length][matriz[0].length];
+
+        boolean error = false;
+
+        for(int i = 0; i < matriz.length; i++){
+
+            for(int j = 0; j < matriz[i].length; j++){
+
+                Double value = obtenerValor( matriz[i][j].getText() );
+
+                if(value != null){
+
+                    AUX[i][j] = value.doubleValue();
+                }
+                else{
+                    error = true;
+                    break;
+                }
+            }
+
+            if(error) break;
+        }
+
+        if(error){
+           JOptionPane.showMessageDialog(null, "Valores no admitidos", "Error al cargar", JOptionPane.ERROR_MESSAGE); 
+        }
+
+        return AUX;
+    }
+        
+    //Convierte Texto a un Numero
+    private static Double obtenerValor(String value){
+
+        value = value.replaceAll(" ", "");
+
+        Double numero = null;
+
+        try {
+
+            if( value.contains("/") ){//Fraccion
+
+                String[] a = value.split("/");
+
+                double num = Double.parseDouble( a[0] );
+
+                double den = Double.parseDouble( a[1] );
+
+                numero = num/den;
+            } 
+            else if( value.contains(",") ){//Decimal con ,
+
+                String n = value.replace(",", ".");
+
+                numero = Double.parseDouble(n);
+            }
+            else {//Entero o Decimal con .
+
+                numero = Double.parseDouble(value);
+            }        
+        }
+        catch (Exception e){//Cualquier otro caso: Letras
+
+            //e.printStackTrace();
+
+            numero = null;
+        }
+
+        return numero; 
     }
     
  //Fin de Clase MatrizView
