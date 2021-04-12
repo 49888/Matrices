@@ -20,7 +20,7 @@ public class Fraccion {
  //-----------------------------------------------------------------------   
     
     //Convertir decimal a fraccion
-    public static Fraccion convFraccion(float N){
+    public static Fraccion convFraccion(double N){
         
         boolean negativo = false;
         
@@ -31,7 +31,7 @@ public class Fraccion {
         
         int num = 1;   int den = 1;
         
-        float aux = (float)(num)/(float)(den);
+        double aux = (double)(num)/(double)(den);
 
         while( aux != N ){
             
@@ -43,7 +43,7 @@ public class Fraccion {
                 den++;
             }
 
-            aux = (float)(num)/(float)(den); 
+            aux = (double)(num)/(double)(den); 
         }
         
         if(negativo) num *= -1;

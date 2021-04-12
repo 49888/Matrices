@@ -32,7 +32,7 @@ public class Principal {
             
         A.setSize(500, 500);    A.setLocationRelativeTo(null);
 
-        A.setVisible(true);
+        A.setVisible(true);  
     }
        
 }

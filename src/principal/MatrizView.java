@@ -1,6 +1,7 @@
 
 package principal;
 
+import Extra.Fraccion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -108,7 +109,7 @@ public class MatrizView  {
         return input;
     }
     
-    
+    //Covierte la Matriz de Texto a Numeros
     public static double[][] obtenerMatriz(JTextComponent matriz[][]){
 
         double[][] AUX = new double[matriz.length][matriz[0].length];
@@ -179,6 +180,34 @@ public class MatrizView  {
         }
 
         return numero; 
+    }
+    
+    
+    
+    //Covierte la Matriz de Numeros a Texto
+    public static String[][] obtenerMatriz(double matriz[][]){
+        
+        String[][] AUX = new String[matriz.length][matriz[0].length];
+        
+        for(int i = 0; i < matriz.length; i++){
+            
+            for(int j = 0; j < matriz[i].length; j++){
+                
+                double N = matriz[i][j];
+                
+                if( N - (long)N != 0 ){
+                    
+                    Fraccion F = Fraccion.convFraccion(N);
+                    
+                    AUX[i][j] = F.toString();
+                }
+                else{
+                    AUX[i][j] = Long.toString( (long)N );
+                }
+            }    
+        }
+        
+        return AUX;
     }
     
  //Fin de Clase MatrizView
