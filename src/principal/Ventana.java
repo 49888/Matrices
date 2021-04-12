@@ -16,12 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.JTextComponent;
 
 
 public class Ventana extends JFrame{
     
     JTextComponent[][] Inputs;
+    
+    int Filas = 3, Columnas = 3;
+    
+    JPanel panelCentral;
         
     public Ventana(){
 
@@ -29,9 +35,19 @@ public class Ventana extends JFrame{
 
         this.add(superior(), BorderLayout.NORTH); 
 
-        this.add(crearMatriz(3, 3), BorderLayout.CENTER);
+     //Panel Central   
+        panelCentral = new JPanel(new BorderLayout());
+        
+        panelCentral.add( crearMatriz(Filas, Columnas) );
+        
+        this.add(panelCentral, BorderLayout.CENTER);
 
-        this.add(inferior(), BorderLayout.SOUTH);
+     //Panel Inferior
+        JPanel panelInferior = new JPanel();
+        
+        panelInferior.add(inferior());
+        
+        this.add(panelInferior, BorderLayout.SOUTH);
     }
         
  //------------------------- PANEL SUPERIOR ------------------------------   
@@ -58,6 +74,33 @@ public class Ventana extends JFrame{
 
         number.setName(title);
         number.setPreferredSize(new Dimension(70, 25));
+        
+        number.addChangeListener(new ChangeListener(){
+            
+            @Override
+            public void stateChanged(ChangeEvent e){
+                
+                JSpinner target = (JSpinner)e.getSource();
+                
+                Integer value = (Integer)target.getValue();
+
+                switch(target.getName()){
+                    
+                    case "Filas": Filas = value;
+                        break;
+                        
+                    case "Columnas": Columnas = value;
+                        break;    
+                }
+                
+                panelCentral.removeAll();
+                
+                panelCentral.add(crearMatriz(Filas, Columnas));
+                
+                panelCentral.setVisible(false);
+                panelCentral.setVisible(true);
+            }
+        });
 
         JLabel name = new JLabel(title);
 
@@ -75,7 +118,7 @@ public class Ventana extends JFrame{
 
         Inputs = new JTextComponent[filas][columnas];
 
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 50));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 20));
 
         panel.add( MatrizView.inputMatriz(filas, columnas, Inputs) );
 

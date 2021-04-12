@@ -124,7 +124,7 @@ public class MatrizView  {
 
                 if(value != null){
 
-                    AUX[i][j] = value.doubleValue();
+                    AUX[i][j] = value.doubleValue();   
                 }
                 else{
                     error = true;
