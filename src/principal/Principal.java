@@ -30,7 +30,9 @@ public class Principal {
         
         A.setTitle("Matrices");
             
-        A.setSize(500, 500);    A.setLocationRelativeTo(null);
+        A.setSize(600, 500);    A.setLocationRelativeTo(null);
+        
+        A.setMinimumSize(new Dimension(550, 500));
 
         A.setVisible(true);  
     }

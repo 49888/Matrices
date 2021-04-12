@@ -23,22 +23,30 @@ import javax.swing.text.JTextComponent;
 
 public class Ventana extends JFrame{
     
-    JTextComponent[][] Inputs;
-    
+    MatrizInput matrizInput;
+
     int Filas = 3, Columnas = 3;
     
-    JPanel panelCentral;
+    JPanel panelCentral = new JPanel(new BorderLayout());
+    
+    Barra Bara;
         
     public Ventana(){
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+     //Barra de Opciones  
+        Bara = new Barra(panelCentral);
+        
+        this.setJMenuBar(Bara);
+        
+     //Panel Superior   
         this.add(superior(), BorderLayout.NORTH); 
 
-     //Panel Central   
-        panelCentral = new JPanel(new BorderLayout());
-        
-        panelCentral.add( crearMatriz(Filas, Columnas) );
+     //Panel Central
+        matrizInput = new MatrizInput(Filas, Columnas);
+     
+        panelCentral.add( matrizInput );
         
         this.add(panelCentral, BorderLayout.CENTER);
 
@@ -95,7 +103,9 @@ public class Ventana extends JFrame{
                 
                 panelCentral.removeAll();
                 
-                panelCentral.add(crearMatriz(Filas, Columnas));
+                matrizInput = new MatrizInput(Filas, Columnas);
+                
+                panelCentral.add( matrizInput );
                 
                 panelCentral.setVisible(false);
                 panelCentral.setVisible(true);
@@ -114,17 +124,8 @@ public class Ventana extends JFrame{
         
         
  //------------------------- PANEL CENTRAL ------------------------------   
-    private JComponent crearMatriz(int filas, int columnas){
 
-        Inputs = new JTextComponent[filas][columnas];
-
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 20));
-
-        panel.add( MatrizView.inputMatriz(filas, columnas, Inputs) );
-
-        return new JScrollPane(panel);
-    }
-        
+    
  //------------------------- PANEL INFERIOR ------------------------------
     private JComponent inferior(){
 
@@ -135,7 +136,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
 
-                double[][] A = MatrizView.obtenerMatriz(Inputs);
+                double[][] A = matrizInput.obtenerMatriz();
 
                 for(double[] ds : A){
                     System.out.println( Arrays.toString(ds) );
