@@ -68,7 +68,7 @@ public class Determinante {
     
     //Determinante por el Metodo de Gauss
     public static double detGauss(double[][] matriz){
-        
+          
         int cont = 0;
         
         double[][] AUX = matriz.clone();
@@ -120,7 +120,7 @@ public class Determinante {
     }
     
     //Multiplica la Fila A por N --> A = N *A
-    private static void producto(double A[], double N){
+    protected static void producto(double A[], double N){
         
         for(int i = 0; i < A.length; i++){
             
@@ -129,7 +129,7 @@ public class Determinante {
     }
     
     //Suma a la Fila A la Fila B multiplicada por N --> A = A + N*B
-    private static void sumarFila(double A[], double N, double[] B){
+    protected static void sumarFila(double A[], double N, double[] B){
         
         for(int i = 0; i < A.length; i++){
             
@@ -138,7 +138,7 @@ public class Determinante {
     }
     
     //Intercambia la Fila i con la Fila  i + 1
-    private static void intercambiarFila(int i, double[][] A){
+    protected static void intercambiarFila(int i, double[][] A){
         
         double[] aux = A[i];
         

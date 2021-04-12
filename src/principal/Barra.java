@@ -3,12 +3,17 @@ package principal;
 
 import Extra.Determinante;
 import Extra.Matrices;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -118,16 +123,27 @@ public class Barra extends JMenuBar {
                     switch( n ){
 
                         case "Cofactores":
+                            AUX = new MatrizView( Matrices.cofactores(Matriz) );
                             break;
 
                         case "Adjunta":
+                            AUX = new MatrizView( Matrices.adjunta(Matriz) );
                             break;
 
                         case "Inversa":
+                            try {
+                                AUX = new MatrizView( Matrices.inversa(Matriz) );
+                            } 
+                            catch (Exception ex){
+                               JOptionPane.showMessageDialog(panelCentral, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+                            }
                             break;
 
+
                         case "Determinante":
-                           break;
+                            
+                            AUX = determinante(Matriz);
+                            break;
                     }
                 }
                 else{
@@ -142,5 +158,26 @@ public class Barra extends JMenuBar {
     public void setMatrizInput(MatrizInput input){
         
         this.matrizInput = input;
+    }
+    
+    private JComponent determinante(double matriz[][]){
+        
+        double Det = Determinante.detLaplace(matriz);
+        
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        JLabel det = new JLabel("Determinante: " + Det);
+        det.setHorizontalAlignment(JLabel.CENTER);
+        det.setFont(new Font("Consolas", Font.PLAIN, 20));
+        det.setPreferredSize(new Dimension(150, 50));
+        
+        
+        JComponent triagular = new MatrizView( Matrices.triangularSup(matriz) );
+        
+        panel.add(triagular, BorderLayout.CENTER);
+        
+        panel.add(det, BorderLayout.SOUTH);
+        
+        return panel;
     }
 }
