@@ -29,6 +29,8 @@ public class Ventana extends JFrame{
     
     JPanel panelCentral = new JPanel(new BorderLayout());
     
+    JPanel panelSuperior = new JPanel(new BorderLayout());
+    
     Barra Bara;
         
     public Ventana(){
@@ -36,12 +38,14 @@ public class Ventana extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
      //Barra de Opciones  
-        Bara = new Barra(panelCentral);
+        Bara = new Barra(panelCentral, panelSuperior);
         
         this.setJMenuBar(Bara);
         
-     //Panel Superior   
-        this.add(superior(), BorderLayout.NORTH); 
+     //Panel Superior
+        panelSuperior.add(superior());
+     
+        this.add(panelSuperior, BorderLayout.NORTH); 
 
      //Panel Central
         matrizInput = new MatrizInput(Filas, Columnas);
@@ -53,11 +57,11 @@ public class Ventana extends JFrame{
         this.add(panelCentral, BorderLayout.CENTER);
 
      //Panel Inferior
-        JPanel panelInferior = new JPanel();
+        //JPanel panelInferior = new JPanel();
         
-        panelInferior.add(inferior());
+        //panelInferior.add(inferior());
         
-        this.add(panelInferior, BorderLayout.SOUTH);
+        //this.add(panelInferior, BorderLayout.SOUTH);
     }
         
  //------------------------- PANEL SUPERIOR ------------------------------   

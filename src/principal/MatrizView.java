@@ -92,6 +92,10 @@ public class MatrizView  extends JScrollPane {
             label.setPreferredSize(new Dimension(70, 50));
 
             label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            
+            label.setBackground(Color.WHITE);
+            label.setOpaque(true);
+            label.setFont(new Font("Consolas", Font.PLAIN, 14));
         
         return label;
     }

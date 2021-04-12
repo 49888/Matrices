@@ -2,6 +2,7 @@
 package principal;
 
 import Extra.Determinante;
+import Extra.Matrices;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
@@ -28,11 +30,13 @@ public class Barra extends JMenuBar {
     
     MatrizInput matrizInput;
     
-    HashMap<String, Component[]> Escenas = new HashMap<>();
+    JPanel panelSuperior;
     
-    public Barra(JPanel panelCentral){
+    public Barra(JPanel panelCentral, JPanel panelSuperior){
         
         this.panelCentral = panelCentral;
+        
+        this.panelSuperior = panelSuperior;
         
         JToggleButton Matriz = boton("Matriz");
         JToggleButton Traspuesta = boton("Traspuesta");
@@ -71,12 +75,20 @@ public class Barra extends JMenuBar {
                 
                 panelCentral.removeAll();
                 
-                JComponent panel = calcular( target.getName() );
-  
-                if(panel != null){
-                    panelCentral.add(panel);      
+                if(target.getName() == "Matriz"){
+                    
+                    panelSuperior.setVisible(true);
+                    
+                    panelCentral.add(matrizInput);
                 }
-                
+                else {
+                    panelSuperior.setVisible(false);
+                    
+                   JComponent panel = calcular( target.getName() );
+                   
+                   if(panel != null) panelCentral.add(panel);   
+                }
+ 
                 panelCentral.setVisible(false); panelCentral.setVisible(true);
             }
         });
@@ -91,31 +103,39 @@ public class Barra extends JMenuBar {
         
         JComponent AUX = null;
         
-        switch( n ){
+        double[][] Matriz = matrizInput.obtenerMatriz();
             
-            case "Matriz":
-                AUX = matrizInput;
-                break;
-
-            case "Traspuesta":
+        if(Matriz != null){
+            
+            if(n == "Traspuesta"){
                 
-                AUX = new MatrizView(matrizInput.obtenerMatriz());
+                AUX = new MatrizView( Matrices.traspuesta(Matriz) );
+            }
+            else {
                 
-                break; 
+                if( Determinante.puedeCalcularse(Matriz) ){
+                    
+                    switch( n ){
 
-            case "Cofactores":
-                break;
+                        case "Cofactores":
+                            break;
 
-            case "Adjunta":
-                break;
+                        case "Adjunta":
+                            break;
 
-            case "Inversa":
-                break;
+                        case "Inversa":
+                            break;
 
-            case "Determinante":
-               break;
-        }
-        
+                        case "Determinante":
+                           break;
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(panelCentral, "La matriz no es Cuadrada", "Error", JOptionPane.ERROR_MESSAGE);
+                }    
+            }
+        }    
+            
         return AUX;
     }
     
