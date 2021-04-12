@@ -26,7 +26,7 @@ public class Barra extends JMenuBar {
     
     JPanel panelCentral;
     
-    double[][] Matriz;      boolean Calcular = false;
+    MatrizInput matrizInput;
     
     HashMap<String, Component[]> Escenas = new HashMap<>();
     
@@ -61,7 +61,7 @@ public class Barra extends JMenuBar {
         
         boton.setBackground(Color.GRAY.lightGray);
         
-        /*
+        
         boton.addActionListener(new ActionListener(){
             
             @Override
@@ -73,7 +73,6 @@ public class Barra extends JMenuBar {
                 
                 JComponent panel = calcular( target.getName() );
   
-
                 if(panel != null){
                     panelCentral.add(panel);      
                 }
@@ -90,11 +89,18 @@ public class Barra extends JMenuBar {
     
     private JComponent calcular(String n){
         
-        JPanel panel = null;
+        JComponent AUX = null;
         
         switch( n ){
+            
+            case "Matriz":
+                AUX = matrizInput;
+                break;
 
             case "Traspuesta":
+                
+                AUX = new MatrizView(matrizInput.obtenerMatriz());
+                
                 break; 
 
             case "Cofactores":
@@ -107,20 +113,14 @@ public class Barra extends JMenuBar {
                 break;
 
             case "Determinante":
-                double Det = Determinante.detLaplace(Matriz);
-
-                JLabel det = new JLabel("Determinante: " + Det);
-
-                panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 50));
-                panel.add(det);
-                break;
+               break;
         }
         
-        return panel;
+        return AUX;
     }
     
-    public void setMatriz(double matriz[][], boolean calcular){
+    public void setMatrizInput(MatrizInput input){
         
-        this.Matriz = matriz;    this.Calcular = calcular;
+        this.matrizInput = input;
     }
 }

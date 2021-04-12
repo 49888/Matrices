@@ -46,6 +46,8 @@ public class Ventana extends JFrame{
      //Panel Central
         matrizInput = new MatrizInput(Filas, Columnas);
      
+        Bara.setMatrizInput(matrizInput);
+        
         panelCentral.add( matrizInput );
         
         this.add(panelCentral, BorderLayout.CENTER);
@@ -105,6 +107,8 @@ public class Ventana extends JFrame{
                 
                 matrizInput = new MatrizInput(Filas, Columnas);
                 
+                Bara.setMatrizInput(matrizInput);
+                
                 panelCentral.add( matrizInput );
                 
                 panelCentral.setVisible(false);
@@ -138,9 +142,15 @@ public class Ventana extends JFrame{
 
                 double[][] A = matrizInput.obtenerMatriz();
 
-                for(double[] ds : A){
-                    System.out.println( Arrays.toString(ds) );
-                }
+                if(A != null){ 
+                    
+                    for(double[] ds : A){
+                        
+                        System.out.println( Arrays.toString(ds) );
+                    }
+                    
+                    Bara.setMatrizInput(matrizInput);
+                }    
             }
         });
 

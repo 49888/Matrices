@@ -97,7 +97,7 @@ public class MatrizInput extends JScrollPane {
         }
 
         if(error){
-           JOptionPane.showMessageDialog(null, "Valores no admitidos", "Error al cargar", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(this, "Valores no admitidos", "Error al cargar", JOptionPane.ERROR_MESSAGE);
            
            return null;
         }

@@ -5,7 +5,7 @@ package Extra;
 public class Fraccion {
     
     int numerador;
-        int denominador;
+    int denominador;
 
     public Fraccion(int numerador, int denominador){
         this.numerador = numerador;

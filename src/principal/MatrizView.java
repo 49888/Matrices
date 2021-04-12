@@ -4,6 +4,7 @@ package principal;
 import Extra.Fraccion;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
@@ -11,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -20,35 +22,63 @@ import javax.swing.text.JTextComponent;
 
 
 
-public class MatrizView  {
+public class MatrizView  extends JScrollPane {
 
+    int Filas;  int Columnas;
     
- //---------------------------- VISUALIZAR MATRIZ
-    public static JComponent getView(String[][] matriz, String title){
+    double[][] Matriz;
+    
+    public MatrizView(double[][] Matriz){
         
-        int filas = matriz.length;  int columnas = matriz[0].length;
+        this.Filas = Matriz.length;     this.Columnas = Matriz[0].length;
+        
+        this.Matriz = Matriz;
         
      //Layout   
-        GridLayout layout = new GridLayout(filas, columnas);
+        GridLayout layout = new GridLayout(Filas, Columnas);
         
         layout.setHgap(10);  layout.setVgap(10);
           
      //Papel   
         JPanel panel = new JPanel(layout);
         
-        for(int i = 0; i < filas; i++){
+        for(int i = 0; i < Filas; i++){
             
-            for(int j = 0; j < columnas; j++){
+            for(int j = 0; j < Columnas; j++){
                 
                 String name = Integer.toString(i+1) + Integer.toString(j+1);
                 
-                panel.add( labelItem(matriz[i][j], name, name) );
+                String tooltip = null;
+                
+                String value = "";
+                
+                double N = Matriz[i][j];
+                
+                if( N - (long)N != 0 ){
+                    
+                    tooltip = Double.toString(N);
+                    
+                    Fraccion F = Fraccion.convFraccion(N);
+                    
+                    value = F.toString();
+                }
+                else{
+                    value = Long.toString( (long)N );
+                }
+                
+                panel.add( labelItem(value, name, tooltip) );
             }
         }
         
-        return panel;
+        JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 20));
+        
+        panel2.add(panel);
+        
+        this.setViewportView(panel2); 
     }
     
+    
+
     private static JLabel labelItem(String text, String name, String tooltip){
         
         JLabel label = new JLabel();
@@ -66,31 +96,5 @@ public class MatrizView  {
         return label;
     }
  
-    //Covierte la Matriz de Numeros a Texto
-    public static String[][] obtenerMatriz(double matriz[][]){
-        
-        String[][] AUX = new String[matriz.length][matriz[0].length];
-        
-        for(int i = 0; i < matriz.length; i++){
-            
-            for(int j = 0; j < matriz[i].length; j++){
-                
-                double N = matriz[i][j];
-                
-                if( N - (long)N != 0 ){
-                    
-                    Fraccion F = Fraccion.convFraccion(N);
-                    
-                    AUX[i][j] = F.toString();
-                }
-                else{
-                    AUX[i][j] = Long.toString( (long)N );
-                }
-            }    
-        }
-        
-        return AUX;
-    }
-    
  //Fin de Clase MatrizView
 }
